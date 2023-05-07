@@ -1,5 +1,6 @@
 import type { MainContext, SessionData } from '@/types';
 import { FileAdapter } from '@grammyjs/storage-file';
+import TypePredicates from '../type-control/type-predicates';
 
 export default class SessionControl {
   static sessionConfig() {
@@ -14,6 +15,20 @@ export default class SessionControl {
         dirName: 'sessions'
       })
     };
+  }
+
+  static setTitle(ctx: MainContext) {
+    if (!ctx.message) {
+      console.error('ERROR: Invalid message instance ');
+      return;
+    }
+
+    if (!TypePredicates.notPrivateChat(ctx.message.chat)) {
+      console.error('ERROR: Cannot access private chat properties');
+      return;
+    }
+
+    ctx.session.title = ctx.message.chat.title;
   }
 
   static openState(ctx: MainContext) {
