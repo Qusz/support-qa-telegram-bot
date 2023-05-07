@@ -39,6 +39,15 @@ export default class SessionControl {
     ctx.session.state = 'closed';
   }
 
+  static setUrepliedMessage(
+    ctx: MainContext,
+    messageId: number,
+    messageTime: number
+  ) {
+    ctx.session.firstUnrepliedMessageId = messageId;
+    ctx.session.firstUnrepliedMessageTime = messageTime;
+  }
+
   static resetMessage(ctx: MainContext) {
     ctx.session.firstUnrepliedMessageId = null;
     ctx.session.firstUnrepliedMessageTime = null;
