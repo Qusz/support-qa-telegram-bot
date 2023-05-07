@@ -53,6 +53,11 @@ export default class SessionControl {
     ctx.session.firstUnrepliedMessageTime = null;
   }
 
+  static openSession(ctx: MainContext, messageId: number, messageTime: number) {
+    this.openState(ctx);
+    this.setUrepliedMessage(ctx, messageId, messageTime);
+  }
+
   static resetSession(ctx: MainContext) {
     this.closeState(ctx);
     this.resetMessage(ctx);
