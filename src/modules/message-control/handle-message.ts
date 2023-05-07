@@ -16,16 +16,14 @@ export default async function (ctx: MainContext) {
   let responseTime: null | number = null;
   let repliedTo: null | number = null;
 
-  ctx.session.title = message.title;
+  SessionControl.setTitle(ctx);
 
   switch (true) {
     // First message from customer
     case !message.isSupport && state === 'closed':
-      ctx.session.state = 'open';
-      ctx.session.firstUnrepliedMessageId = message.messageId;
-      ctx.session.firstUnrepliedMessageTime = message.date;
+      SessionControl.openSession(ctx, message.messageId, message.date);
       break;
-    // Support reply
+    // Reply from Support Team
     case message.isSupport && state === 'open':
       if (!firstUnrepliedMessageTime) break;
 
@@ -34,7 +32,7 @@ export default async function (ctx: MainContext) {
 
       SessionControl.resetSession(ctx);
       break;
-    // Consecutive unreplied messages || Support initializing dialog
+    // Ignore consecutive unreplied messages || Support initializing dialog
     case !message.isSupport && state === 'open':
     case message.isSupport && state === 'closed':
       break;
