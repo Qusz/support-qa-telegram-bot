@@ -1,6 +1,6 @@
 import type { MainContext, SessionData } from '@/types';
 import { FileAdapter } from '@grammyjs/storage-file';
-import TypePredicates from '../type-control/type-predicates';
+import TypePredicates from '@/modules/type-control/type-predicates';
 
 export default class SessionControl {
   static sessionConfig() {
