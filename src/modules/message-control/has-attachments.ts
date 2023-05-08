@@ -4,7 +4,7 @@ export default function (ctx: MainContext) {
   const message = ctx.message ?? ctx.editedMessage;
 
   if (!message) {
-    throw new Error('ERROR: Cannot access message instance');
+    throw new Error('Cannot access message instance');
   }
 
   return !!(
