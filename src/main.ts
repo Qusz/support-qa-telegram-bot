@@ -35,8 +35,8 @@ import type { MainContext } from './types';
     await editMessage(ctx);
   });
 
-  bot.catch((error) => {
-    errorControl(error);
+  bot.catch(async (error) => {
+    await errorControl(error, bot);
   });
 
   bot.start();
