@@ -6,7 +6,9 @@ import TypePredicates from '@/modules/type-control/type-predicates';
 
 import hasAttachments from './has-attachments';
 
-export default function (ctx: MainContext): GuaranteedElements<Message> {
+export default function (
+  ctx: MainContext
+): GuaranteedElements<Message> | undefined {
   if (!ctx.message) {
     throw new Error('Invalid message instance');
   }
@@ -27,8 +29,9 @@ export default function (ctx: MainContext): GuaranteedElements<Message> {
 
   if (hasAttachments(ctx)) {
     message.text = 'Вложение';
+    // Most likely a system message
   } else if (!hasAttachments(ctx) && !ctx.message.text) {
-    throw new Error('Could not get message content');
+    return undefined;
   }
 
   if (!TypeGuard.isValidMessage(message)) {
