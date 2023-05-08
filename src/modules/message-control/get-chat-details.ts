@@ -25,12 +25,10 @@ export default function (ctx: MainContext): GuaranteedElements<Message> {
     date: ctx.message.date
   };
 
-  /* Message.text returns 'undefined' when there's an attachment */
-  /* In case there's no attachment, yet we still cannot get the text content for some reason, payload is changed to error message instead of throwing an error  */
   if (hasAttachments(ctx)) {
     message.text = 'Вложение';
   } else if (!hasAttachments(ctx) && !ctx.message.text) {
-    message.text = 'Could not get message content';
+    throw new Error('Could not get message content');
   }
 
   if (!TypeGuard.isValidMessage(message)) {
