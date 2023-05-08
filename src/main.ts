@@ -4,10 +4,12 @@ import config from 'config';
 import handleMessage from './modules/message-control/handle-message';
 import editMessage from './modules/message-control/edit-message';
 import SessionControl from './modules/session-control/session-control';
+import errorControl from './modules/error-handling/error-control';
 
 import type { MainContext } from './types';
 
 // TODO timestamps should be in Moscow time
+// TODO handle deleted messages (don't delete them, just mark them as deleted)
 
 (() => {
   const BOT_TOKEN: string = config.get('bot-token');
@@ -31,6 +33,10 @@ import type { MainContext } from './types';
 
   bot.on('edited_message', async (ctx) => {
     await editMessage(ctx);
+  });
+
+  bot.catch((error) => {
+    errorControl(error);
   });
 
   bot.start();
