@@ -8,11 +8,11 @@ import hasAttachments from './has-attachments';
 
 export default function (ctx: MainContext): GuaranteedElements<Message> {
   if (!ctx.message) {
-    throw new Error('ERROR: Invalid message instance');
+    throw new Error('Invalid message instance');
   }
 
   if (!TypePredicates.notPrivateChat(ctx.message.chat)) {
-    throw new Error('ERROR: Cannot access private chat details');
+    throw new Error('Cannot access private chat details');
   }
 
   const message: Message = {
@@ -30,11 +30,11 @@ export default function (ctx: MainContext): GuaranteedElements<Message> {
   if (hasAttachments(ctx)) {
     message.text = 'Вложение';
   } else if (!hasAttachments(ctx) && !ctx.message.text) {
-    message.text = 'ERROR: Could not get message content';
+    message.text = 'Could not get message content';
   }
 
   if (!TypeGuard.isValidMessage(message)) {
-    throw new Error('ERROR: Invalid chat data');
+    throw new Error('Invalid chat data');
   }
 
   message.isSupport = isSupportAccount(message.messageAuthor);
