@@ -17,6 +17,6 @@ export default async function (data: StorageData) {
       replied_to_message: data.repliedToMessage
     });
   } catch (error) {
-    console.error('Error inserting row:', error);
+    console.error('Failed to insert row:', error);
   }
 }
