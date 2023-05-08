@@ -5,6 +5,7 @@ import SessionControl from '@/modules/session-control/session-control';
 
 import epochToTimestamp from '@/utils/epoch-to-timestamp';
 import secondsToMins from '@/utils/seconds-to-mins';
+import workingHoursCheck from '@/utils/working-hours-check';
 
 import getChatDetails from './get-chat-details';
 
@@ -13,17 +14,28 @@ export default async function (ctx: MainContext) {
   const { firstUnrepliedMessageId, firstUnrepliedMessageTime, state } =
     ctx.session;
 
+  // Ignore messages with undefined payload
+  if (!message) return;
+
   let responseTime: null | number = null;
   let repliedTo: null | number = null;
 
   SessionControl.setTitle(ctx);
 
   switch (true) {
-    // First message from customer
-    case !message.isSupport && state === 'closed':
+    /* Ignore messages past working hours or consecutive unreplied messages or Support initializing dialog */
+    case !message.isSupport &&
+      !workingHoursCheck(message.date) &&
+      state === 'closed':
+    case !message.isSupport && state === 'open':
+    case message.isSupport && state === 'closed':
+      break;
+    // Message from customer during working hours
+    case !message.isSupport &&
+      workingHoursCheck(message.date) &&
+      state === 'closed':
       SessionControl.openSession(ctx, message.messageId, message.date);
       break;
-    // Reply from Support Team
     case message.isSupport && state === 'open':
       if (!firstUnrepliedMessageTime) break;
 
@@ -31,10 +43,6 @@ export default async function (ctx: MainContext) {
       repliedTo = firstUnrepliedMessageId;
 
       SessionControl.resetSession(ctx);
-      break;
-    // Ignore consecutive unreplied messages || Support initializing dialog
-    case !message.isSupport && state === 'open':
-    case message.isSupport && state === 'closed':
       break;
     default:
       throw new Error('Something went wrong');
