@@ -18,6 +18,6 @@ export default async function (ctx: MainContext) {
       await updateMessages(messageId, 'Вложение');
       break;
     default:
-      throw new Error('UNEXCEPTED ERROR: Cannot update message');
+      throw new Error('Cannot update message');
   }
 }
