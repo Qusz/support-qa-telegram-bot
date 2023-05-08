@@ -8,14 +8,11 @@ import errorControl from './modules/error-handling/error-control';
 
 import type { MainContext } from './types';
 
-// TODO timestamps should be in Moscow time
-// TODO handle deleted messages (don't delete them, just mark them as deleted)
-
 (() => {
   const BOT_TOKEN: string = config.get('bot-token');
 
   if (!BOT_TOKEN) {
-    throw new Error('ERROR: Invalid token');
+    throw new Error('Invalid token');
   }
 
   const bot = new Bot<MainContext>(BOT_TOKEN);
