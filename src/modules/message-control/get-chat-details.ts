@@ -22,7 +22,10 @@ export default function (
     title: ctx.message.chat.title,
     messageId: ctx.message.message_id,
     text: ctx.message.text,
-    messageAuthor: ctx.message.from.username,
+    messageAuthor:
+      ctx.message.from.username ??
+      ctx.message.from.first_name ??
+      ctx.message.from.id.toString(),
     isSupport: null,
     date: ctx.message.date
   };
