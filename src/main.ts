@@ -4,7 +4,7 @@ import config from 'config';
 import handleMessage from './modules/message-control/handle-message';
 import editMessage from './modules/message-control/edit-message';
 import SessionControl from './modules/session-control/session-control';
-import errorControl from './modules/error-handling/error-control';
+import errorControl from './modules/error-control/error-handling';
 
 import type { MainContext } from './types';
 
