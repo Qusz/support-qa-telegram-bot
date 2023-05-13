@@ -21,9 +21,8 @@ export default async function (
   }
 
   try {
-    if (!ADMIN_CHAT_ID) {
-      throw new Error('Invalid admin chat ID');
-    }
+    if (!ADMIN_CHAT_ID) return;
+
     await bot.api.sendMessage(ADMIN_CHAT_ID, error.message);
   } catch (notificationError) {
     if (notificationError instanceof Error) {
