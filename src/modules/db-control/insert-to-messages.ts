@@ -10,6 +10,7 @@ export default async function (data: StorageData) {
       author: data.author,
       message_text: data.message,
       chat_title: data.chatTitle,
+      chat_id: data.chatId,
       sent_at: data.sendAt,
       is_premium_bonus: data.isPremiumBonus,
       response_time: data.responseTime,
