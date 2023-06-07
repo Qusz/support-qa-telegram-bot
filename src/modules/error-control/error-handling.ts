@@ -21,9 +21,7 @@ export default async function (
   }
 
   try {
-    if (!ADMIN_CHAT_ID) return;
-
-    await bot.api.sendMessage(ADMIN_CHAT_ID, error.message);
+    await bot.api.sendMessage(ADMIN_CHAT_ID, `${error}`);
   } catch (notificationError) {
     if (notificationError instanceof Error) {
       console.error(`Failed to send error message: ${error.message}`);
