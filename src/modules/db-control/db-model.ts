@@ -23,6 +23,10 @@ export const messagesTable = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false
     },
+    chat_id: {
+      type: DataTypes.NUMBER,
+      allowNull: false
+    },
     sent_at: {
       type: DataTypes.DATE,
       allowNull: false
