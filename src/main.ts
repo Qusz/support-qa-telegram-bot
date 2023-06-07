@@ -2,9 +2,10 @@ import { Bot, session } from 'grammy';
 import config from 'config';
 
 import handleMessage from './modules/message-control/handle-message';
+import deleteMessage from './modules/message-control/delete-message';
 import editMessage from './modules/message-control/edit-message';
 import SessionControl from './modules/session-control/session-control';
-import errorControl from './modules/error-control/error-handling';
+import errorControl from './modules/error-handling/error-control';
 
 import type { MainContext } from './types';
 
@@ -22,6 +23,8 @@ import type { MainContext } from './types';
   bot.command('start', (ctx) => ctx.reply('Бот успешно запущен!'));
   bot.command('closeticket', (ctx) => {
     SessionControl.resetSession(ctx);
+
+    deleteMessage(ctx);
   });
 
   bot.on('message', async (ctx) => {
