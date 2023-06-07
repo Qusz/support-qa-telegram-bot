@@ -4,3 +4,9 @@ export const WORKING_HOURS = {
   open: 6,
   close: 18
 };
+
+export const WORKING_HOURS_EXTENDED = {
+  // In UTC+0
+  open: 6,
+  close: 0
+};
