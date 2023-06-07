@@ -25,14 +25,14 @@ export default async function (ctx: MainContext) {
   switch (true) {
     /* Ignore messages past working hours or consecutive unreplied messages or Support initializing dialog */
     case !message.isSupport &&
-      !workingHoursCheck(message.date) &&
+      !workingHoursCheck(message.chatId, message.date) &&
       state === 'closed':
     case !message.isSupport && state === 'open':
     case message.isSupport && state === 'closed':
       break;
     // Message from customer during working hours
     case !message.isSupport &&
-      workingHoursCheck(message.date) &&
+      workingHoursCheck(message.chatId, message.date) &&
       state === 'closed':
       SessionControl.openSession(ctx, message.messageId, message.date);
       break;
@@ -50,6 +50,7 @@ export default async function (ctx: MainContext) {
 
   await insertToMessages({
     chatTitle: message.title,
+    chatId: message.chatId,
     author: message.messageAuthor,
     messageId: message.messageId,
     message: message.text,
