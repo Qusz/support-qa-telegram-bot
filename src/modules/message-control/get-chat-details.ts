@@ -19,6 +19,7 @@ export default function (
 
   const message: Message = {
     chat: ctx.message.chat,
+    chatId: ctx.message.chat.id,
     title: ctx.message.chat.title,
     messageId: ctx.message.message_id,
     text: ctx.message.text,
